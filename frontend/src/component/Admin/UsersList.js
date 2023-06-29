@@ -119,7 +119,7 @@ const UsersList = ({ history }) => {
 
   return (
     <Fragment>
-      <MetaData title={`ALL USERS - Admin`} />
+      <MetaData title={`All Users`} />
 
       <div className="dashboard">
         <SideBar />

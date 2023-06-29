@@ -35,8 +35,12 @@
   transition: all 0.5s;
 }
 
+.productListTable a{
+  margin-top: 1vmax;
+}
+
 .productListTable a:hover {
-  color: tomato;
+  color: #061890;
 }
 
 .productListTable button:hover {

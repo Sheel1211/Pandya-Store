@@ -7,6 +7,34 @@ import { clearErrors, getProduct } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
+import { TypeAnimation } from "react-type-animation";
+
+const ExampleComponent = () => {
+  return (
+    <TypeAnimation
+      sequence={[
+        "Shop the World, Delivered to Your Doorstep",
+        1000,
+        "Where Style Meets Convenience, Every Time",
+        1000,
+        "Discover, Shop, and Inspire",
+        1000,
+        "Discover the Art of Smart Shopping",
+        1000,
+        "Find Your Perfect Match, Shop Exclusively",
+        1000,
+        "Your One-Stop Shopping Destination",
+        1000,
+        "Shop with Confidence, Always",
+        1000,
+      ]}
+      wrapper="h1"
+      speed={50}
+      style={{ fontSize: "2.5vmax", display: "inline-block" }}
+      repeat={Infinity}
+    />
+  );
+};
 
 const Home = () => {
   const alert = useAlert();
@@ -27,15 +55,16 @@ const Home = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="ECOMMERCE" />
+          <MetaData title="Pandya Store" />
 
           <div className="banner">
-            <p>Welcome to Ecommerce</p>
-            <h1>FIND AMAZING PRODUCTS BELOW</h1>
+            <p>Welcome to Pandya Store</p>
+            {/* <h1>Seamless Shopping at Your Fingertips</h1> */}
+            <ExampleComponent />
 
             <a href="#container">
               <button>
-                Scroll <CgMouse />
+                Featured <CgMouse />
               </button>
             </a>
           </div>

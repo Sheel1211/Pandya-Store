@@ -129,7 +129,7 @@ const ProductReviews = ({ history }) => {
 
   return (
     <Fragment>
-      <MetaData title={`ALL REVIEWS - Admin`} />
+      <MetaData title={`All Reviews`} />
 
       <div className="dashboard">
         <SideBar />

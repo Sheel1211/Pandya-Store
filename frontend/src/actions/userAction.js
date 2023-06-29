@@ -104,7 +104,7 @@ export const loadUser = () => async (dispatch) => {
 // Logout User
 export const logout = () => async (dispatch) => {
   try {
-    const {data} = await axios.get(`http://localhost:4000/api/v1/logout`,{mode:'cors',
+    await axios.get(`http://localhost:4000/api/v1/logout`,{mode:'cors',
     credentials:'include',
     withCredentials:true});
     Cookies.remove("token");
