@@ -31,6 +31,10 @@ const productSchema = mongoose.Schema({
       },
     },
   ],
+  approved:{
+    type:Boolean,
+    default:false
+  },
   category: {
     type: String,
     required: [true, "Please Enter Product Category"],

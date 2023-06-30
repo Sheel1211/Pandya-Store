@@ -29,6 +29,21 @@ import {
   DELETE_REVIEW_SUCCESS,
   DELETE_REVIEW_FAIL,
   CLEAR_ERRORS,
+  SELLER_PRODUCT_REQUEST,
+  SELLER_PRODUCT_SUCCESS,
+  SELLER_PRODUCT_FAIL,
+  UNAPPROVED_PRODUCT_REQUEST,
+  UNAPPROVED_PRODUCT_SUCCESS,
+  UNAPPROVED_PRODUCT_FAIL,
+  APPROVE_PRODUCT_REQUEST,
+  APPROVE_PRODUCT_SUCCESS,
+  APPROVE_PRODUCT_FAIL,
+  DELETE_SELLER_PRODUCT_REQUEST,
+  DELETE_SELLER_PRODUCT_FAIL,
+  DELETE_SELLER_PRODUCT_SUCCESS,
+  UPDATE_SELLER_PRODUCT_REQUEST,
+  UPDATE_SELLER_PRODUCT_SUCCESS,
+  UPDATE_SELLER_PRODUCT_FAIL,
 } from "../constants/productConstants";
 
 // Get All Products
@@ -80,6 +95,49 @@ export const getAdminProduct = () => async (dispatch) => {
     });
   }
 };
+
+//Get Products Created By Seller
+export const getSellerProducts = ()=>async(dispatch)=>{
+  try {
+    dispatch({ type: SELLER_PRODUCT_REQUEST });
+
+    const { data } = await axios.get("http://localhost:4000/api/v1/seller/products",{mode:'cors',
+    credentials:'include',
+    withCredentials:true});
+
+    dispatch({
+      type: SELLER_PRODUCT_SUCCESS,
+      payload: data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: SELLER_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+}
+
+//Get Unapproved Products
+export const getUnapprovedProduct = () => async (dispatch) => {
+  try {
+    dispatch({ type: UNAPPROVED_PRODUCT_REQUEST });
+
+    const { data } = await axios.get("http://localhost:4000/api/v1/admin/getUnapprovedProducts",{mode:'cors',
+    credentials:'include',
+    withCredentials:true});
+
+    dispatch({
+      type: UNAPPROVED_PRODUCT_SUCCESS,
+      payload: data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: UNAPPROVED_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 
 // Create Product
 export const createProduct = (productData) => async (dispatch) => {
@@ -256,4 +314,76 @@ export const deleteReviews = (reviewId, productId) => async (dispatch) => {
 // Clearing Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
+};
+
+export const approveProduct=(id)=>async(dispatch)=>{
+  try {
+    dispatch({ type: APPROVE_PRODUCT_REQUEST });
+
+    const { data } = await axios.get(
+      `http://localhost:4000/api/v1/admin/approve/product/${id}`,{mode:'cors',
+      credentials:'include',
+      withCredentials:true}
+    );
+
+    dispatch({
+      type: APPROVE_PRODUCT_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: APPROVE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+}
+
+export const deleteSellerProduct = (id)=>async(dispatch)=>{
+  try{
+    dispatch({type:DELETE_SELLER_PRODUCT_REQUEST});
+
+    const {data}=await axios.delete(`http://localhost:4000/api/v1/seller/product/${id}`,{mode:'cors',
+    credentials:'include',
+    withCredentials:true});
+
+    dispatch({
+      type:DELETE_SELLER_PRODUCT_SUCCESS,
+      payload:data.success,
+    });
+  }
+  catch (error) {
+    dispatch({
+      type: DELETE_SELLER_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateSellerProduct = (id, productData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_SELLER_PRODUCT_REQUEST });
+
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      mode:'cors',
+      credentials:'include',
+      withCredentials:true
+    };
+
+    const { data } = await axios.put(
+      `http://localhost:4000/api/v1/seller/product/${id}`,
+      productData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_SELLER_PRODUCT_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_SELLER_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

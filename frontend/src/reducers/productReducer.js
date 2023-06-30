@@ -32,12 +32,32 @@ import {
   DELETE_REVIEW_FAIL,
   DELETE_REVIEW_RESET,
   CLEAR_ERRORS,
+  SELLER_PRODUCT_REQUEST,
+  SELLER_PRODUCT_SUCCESS,
+  SELLER_PRODUCT_FAIL,
+  UNAPPROVED_PRODUCT_REQUEST,
+  UNAPPROVED_PRODUCT_SUCCESS,
+  UNAPPROVED_PRODUCT_FAIL,
+  APPROVE_PRODUCT_REQUEST,
+  APPROVE_PRODUCT_SUCCESS,
+  APPROVE_PRODUCT_FAIL,
+  APPROVE_PRODUCT_RESET,
+  DELETE_SELLER_PRODUCT_REQUEST,
+  DELETE_SELLER_PRODUCT_SUCCESS,
+  DELETE_SELLER_PRODUCT_FAIL,
+  DELETE_SELLER_PRODUCT_RESET,
+  UPDATE_SELLER_PRODUCT_SUCCESS,
+  UPDATE_SELLER_PRODUCT_REQUEST,
+  UPDATE_SELLER_PRODUCT_FAIL,
+  UPDATE_SELLER_PRODUCT_RESET,
 } from "../constants/productConstants";
 
 export const productsReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case ALL_PRODUCT_REQUEST:
     case ADMIN_PRODUCT_REQUEST:
+    case SELLER_PRODUCT_REQUEST: 
+    case UNAPPROVED_PRODUCT_REQUEST: 
       return {
         loading: true,
         products: [],
@@ -52,12 +72,17 @@ export const productsReducer = (state = { products: [] }, action) => {
       };
 
     case ADMIN_PRODUCT_SUCCESS:
+    case SELLER_PRODUCT_SUCCESS:
+    case UNAPPROVED_PRODUCT_SUCCESS:
       return {
         loading: false,
         products: action.payload,
       };
+
     case ALL_PRODUCT_FAIL:
     case ADMIN_PRODUCT_FAIL:
+    case SELLER_PRODUCT_FAIL:
+    case UNAPPROVED_PRODUCT_FAIL:
       return {
         loading: false,
         error: action.payload,
@@ -111,11 +136,14 @@ export const productReducer = (state = {}, action) => {
   switch (action.type) {
     case DELETE_PRODUCT_REQUEST:
     case UPDATE_PRODUCT_REQUEST:
+    case DELETE_SELLER_PRODUCT_REQUEST:
+    case UPDATE_SELLER_PRODUCT_REQUEST:
       return {
         ...state,
         loading: true,
       };
     case DELETE_PRODUCT_SUCCESS:
+    case DELETE_SELLER_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -123,24 +151,30 @@ export const productReducer = (state = {}, action) => {
       };
 
     case UPDATE_PRODUCT_SUCCESS:
+    case UPDATE_SELLER_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
         isUpdated: action.payload,
       };
     case DELETE_PRODUCT_FAIL:
-    case UPDATE_PRODUCT_FAIL:
+      case UPDATE_PRODUCT_FAIL:
+      case DELETE_SELLER_PRODUCT_FAIL:
+      case UPDATE_SELLER_PRODUCT_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
     case DELETE_PRODUCT_RESET:
+    case DELETE_SELLER_PRODUCT_RESET:
+    
       return {
         ...state,
         isDeleted: false,
       };
     case UPDATE_PRODUCT_RESET:
+    case UPDATE_SELLER_PRODUCT_RESET:
       return {
         ...state,
         isUpdated: false,
@@ -268,6 +302,40 @@ export const reviewReducer = (state = {}, action) => {
       return {
         ...state,
         isDeleted: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const approveReducer = (state = {}, action) => {
+  switch (action.type) {
+    case APPROVE_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case APPROVE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isApproved: true,
+      };
+    case APPROVE_PRODUCT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case APPROVE_PRODUCT_RESET:
+      return {
+        ...state,
+        isApproved: false,
       };
     case CLEAR_ERRORS:
       return {

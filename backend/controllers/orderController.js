@@ -128,3 +128,37 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+//Get Orders for specific seller
+exports.getSellerOrder = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const orders = await Order.find();
+    const sellerProducts = await Product.find({ user: req.user._id });
+
+    const finalOrders = [];
+    await orders.map((o) => {
+      for (let j = 0; j < o.orderItems.length; j++) {
+        for (let i = 0; i < sellerProducts.length; i++) {
+          // console.log(sellerProducts[i]._id.toString() + "  " + o.orderItems[j].product.toString())
+          if (
+            sellerProducts[i]._id.toString() ===
+            o.orderItems[j].product.toString()
+          ) {
+            o.orderItems[j].buyer = o.user;
+            finalOrders.push(o.orderItems[j]);
+          }
+        }
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      finalOrders,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error,
+    });
+  }
+});

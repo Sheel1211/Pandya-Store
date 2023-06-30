@@ -33,6 +33,13 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   },
+  products: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Product",
+      required: true,
+    },
+  ],
   role: {
     type: String,
     default: "user",

@@ -142,7 +142,7 @@
 .loginBtn:hover,
 .signUpBtn:hover {
   background-color: #02127a;
-  color:white;
+  color: white;
 }
 
 .shiftToLeft {
@@ -159,7 +159,42 @@
 .shiftToRight {
   transform: translateX(100%);
 }
+.MuiFormLabel-root {
+  font: 300 1.2vmax cursive !important;
+  align-self: center;
+  margin-top:0.8vmax;
+}
 
+.MuiFormControl-root{
+  width: 100%;
+}
+
+.MuiFormGroup-row{
+
+  justify-content: space-evenly !important;
+  width: 100% !important;
+}
+.MuiRadio-colorSecondary.Mui-checked {
+  color: #02127a !important;
+}
+
+.MuiTypography-body1{
+  font: 300 0.9vmax cursive !important;
+  color:rgba(0, 0, 0, 0.678);
+}
+.userRole > RadioGroup{
+  display:flex;
+  justify-content: space-evenly;
+  width:100%;
+}
+
+.MuiFormGroup-root{
+  align-items: center;
+}
+.MuiFormGroup-root > svg{
+  transform: translateX(-2vmax);
+  /* display: none; */
+}
 @media screen and (max-width: 600px) {
   .LoginSignUpContainer {
     background-color: white;
@@ -209,5 +244,12 @@
   .signUpBtn {
     font: 300 1.9vmax "Roboto";
     padding: 1.8vmax;
+  }
+  
+  .MuiTypography-root{
+    font: 300 1.9vmax "cursive" !important;    
+  }
+  .MuiFormLabel-root{    
+    font: 300 2.1vmax "cursive" !important;
   }
 }

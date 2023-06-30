@@ -7,19 +7,16 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import AddIcon from "@material-ui/icons/Add";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
-import ListAltIcon from "@material-ui/icons/ListAlt";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import PeopleIcon from "@material-ui/icons/People";
-import RateReviewIcon from "@material-ui/icons/RateReview";
-import {MdApproval} from "react-icons/md";
 
-const Sidebar = () => {
+
+const SellerSidebar = () => {
   return (
     <div className="sidebar">
       <Link to="/">
         <img src={logo} alt="Ecommerce" />
       </Link>
-      <Link to="/admin/dashboard">
+      <Link to="/seller/dashboard">
         <p>
           <DashboardIcon /> Dashboard
         </p>
@@ -30,41 +27,19 @@ const Sidebar = () => {
           defaultExpandIcon={<ImportExportIcon />}
         >
           <TreeItem nodeId="1" label="Products">
-            <Link to="/admin/products">
-              <TreeItem nodeId="2" label="All" icon={<PostAddIcon />} />
+            <Link to="/seller/products">
+              <TreeItem nodeId="2" label="My Products" icon={<PostAddIcon />} />
             </Link>
 
-            <Link to="/admin/product">
+            <Link to="/seller/product">
               <TreeItem nodeId="3" label="Create" icon={<AddIcon />} />
             </Link>
           </TreeItem>
         </TreeView>
       </span>
-      <Link to="/admin/orders">
-        <p>
-          <ListAltIcon />
-          Orders
-        </p>
-      </Link>
-      <Link to="/admin/users">
-        <p>
-          <PeopleIcon /> Users
-        </p>
-      </Link>
-      <Link to="/admin/reviews">
-        <p>
-          <RateReviewIcon />
-          Reviews
-        </p>
-      </Link>
-      <Link to="/admin/approve">
-        <p>
-          <MdApproval />
-          Product Approval
-        </p>
-      </Link>
+      
     </div>
   );
 };
 
-export default Sidebar;
+export default SellerSidebar;

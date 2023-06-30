@@ -31,8 +31,11 @@ import OrderSuccess from "./component/Cart/OrderSuccess";
 import MyOrders from "./component/Order/MyOrders";
 import OrderDetails from "./component/Order/OrderDetails";
 import Dashboard from "./component/Admin/Dashboard.js";
+import SellerDashboard from "./component/Seller/Dashboard";
 import ProductList from "./component/Admin/ProductList.js";
+import SellerProductList from "./component/Seller/ProductList.js";
 import NewProduct from "./component/Admin/NewProduct";
+import SellerNewProduct from "./component/Seller/NewProduct";
 import UpdateProduct from "./component/Admin/UpdateProduct";
 import OrderList from "./component/Admin/OrderList";
 import ProcessOrder from "./component/Admin/ProcessOrder";
@@ -41,6 +44,9 @@ import UpdateUser from "./component/Admin/UpdateUser";
 import ProductReviews from "./component/Admin/ProductReviews";
 import Contact from "./component/layout/Contact/Contact";
 import About from "./component/layout/About/About";
+import SellerRoute from "./component/Route/sellerRoute";
+import ProductApproveList from "./component/Admin/productApproval";
+import UpdateSellerProduct from "./component/Seller/UpdateProduct";
 // import NotFound from "./component/layout/Not Found/NotFound";
 
 function App() {
@@ -90,7 +96,6 @@ function App() {
           <ProtectedRoute exact path="/process/payment" component={Payment} />
         </Elements>
       )}
-      
 
       <Switch>
         <Route exact path="/" component={Home} />
@@ -189,6 +194,44 @@ function App() {
           path="/admin/reviews"
           isAdmin={true}
           component={ProductReviews}
+        />
+
+        <ProtectedRoute
+          exact
+          path="/admin/approve"
+          isAdmin={true}
+          component={ProductApproveList}
+        />
+
+        {/* Seller Routes */}
+        <SellerRoute
+          isAdmin={true}
+          isSeller={true}
+          exact
+          path="/seller/dashboard"
+          component={SellerDashboard}
+        />
+        <SellerRoute
+          exact
+          path="/seller/products"
+          isAdmin={true}
+          isSeller={true}
+          component={SellerProductList}
+        />
+        <SellerRoute
+          exact
+          path="/seller/product"
+          isAdmin={true}
+          isSeller={true}
+          component={SellerNewProduct}
+        />
+
+        <SellerRoute
+          exact
+          path="/seller/product/:id"
+          isAdmin={true}
+          isSeller={true}
+          component={UpdateSellerProduct}
         />
 
         {/* <Route

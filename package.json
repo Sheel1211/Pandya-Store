@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.6",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.26.3",
@@ -24,7 +27,9 @@
     "mongoose": "^5.13.5",
     "nodemailer": "^6.6.3",
     "path": "^0.12.7",
+    "react-error-overlay": "^6.0.11",
     "stripe": "^8.174.0",
+    "uninstall": "^0.0.0",
     "validator": "^13.6.0"
   }
 }

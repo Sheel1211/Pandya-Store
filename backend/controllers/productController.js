@@ -4,7 +4,8 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures");
 const cloudinary = require("cloudinary");
 
-// Create Product -- Admin
+// Create Product -- Admin and Seller both .
+// We pass approved=true in admin creation and in seller we make pending until admin approval
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   let images = [];
 
@@ -43,7 +44,10 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   const resultPerPage = 8;
   const productsCount = await Product.countDocuments();
 
-  const apiFeature = new ApiFeatures(Product.find(), req.query)
+  const apiFeature = new ApiFeatures(
+    Product.find({ approved: true }),
+    req.query
+  )
     .search()
     .filter();
 
@@ -262,5 +266,116 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+  });
+});
+
+exports.getSellersProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find({ user: req.user });
+
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
+
+exports.getUnApprovedProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find({ approved: false });
+
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
+
+exports.approveProduct = catchAsyncErrors(async (req, res, next) => {
+  try{
+
+    const product = await Product.findById(req.params.id);    
+    if (!product) {
+      return next(new ErrorHandler("Product not found", 404));
+    }
+    product.approved = true;
+    await product.save();
+
+    res.status(200).json({
+      success:true,
+      message:"Product Deleted Successfully"
+    })
+  }
+  catch(e){
+    return next(new ErrorHandler("Product Not Found",404));
+  }
+});
+
+exports.deleteSellerProduct = catchAsyncErrors(async(req,res,next)=>{
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+  
+  if(product.user.toString() != req.user._id.toString()) return next(new ErrorHandler("You Can't Delete this product as it belongs to someone else", 404));
+
+  for (let i = 0; i < product.images.length; i++) {
+    await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+  }
+
+  await product.remove();
+
+  res.status(200).json({
+    success: true,
+    message: "Product Delete Successfully",
+  });
+});
+
+exports.updateSellerProduct = catchAsyncErrors(async (req, res, next) => {
+  let product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+
+  if(product.user.toString() != req.user._id.toString()) return next(new ErrorHandler("You Can't Update this product as it belongs to someone else", 404));
+
+  // Images Start Here
+  let images = [];
+
+  if (typeof req.body.images === "string") {
+    images.push(req.body.images);
+  } else {
+    images = req.body.images;
+  }
+
+  if (images !== undefined) {
+    // Deleting Images From Cloudinary
+    for (let i = 0; i < product.images.length; i++) {
+      await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+    }
+
+    const imagesLinks = [];
+
+    for (let i = 0; i < images.length; i++) {
+      const result = await cloudinary.v2.uploader.upload(images[i], {
+        folder: "products",
+      });
+
+      imagesLinks.push({
+        public_id: result.public_id,
+        url: result.secure_url,
+      });
+    }
+
+    req.body.images = imagesLinks;
+  }
+
+  product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+    product,
   });
 });

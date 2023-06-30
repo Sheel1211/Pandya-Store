@@ -42,7 +42,18 @@ const UserOptions = ({ user }) => {
       func: dashboard,
     });
   }
+  if (user.role === "seller") {
+    options.unshift({
+      icon: <DashboardIcon />,
+      name: "Dashboard",
+      func: sellerDashboard,
+    });
+  }
 
+  function sellerDashboard() {
+    history.push("/seller/dashboard");
+  }
+  
   function dashboard() {
     history.push("/admin/dashboard");
   }

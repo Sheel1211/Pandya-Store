@@ -13,7 +13,7 @@ import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import SideBar from "./Sidebar";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 
-const NewProduct = ({ history }) => {
+const SellerNewProduct = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
@@ -44,8 +44,8 @@ const NewProduct = ({ history }) => {
     }
 
     if (success) {
-      alert.success("Product Created Successfully");
-      history.push("/admin/dashboard");
+      alert.success("Product Listed For Admin Approval");
+      history.push("/seller/dashboard");
       dispatch({ type: NEW_PRODUCT_RESET });
     }
   }, [dispatch, alert, error, history, success]);
@@ -60,7 +60,6 @@ const NewProduct = ({ history }) => {
     myForm.set("description", description);
     myForm.set("category", category);
     myForm.set("Stock", Stock);
-    myForm.set("approved", true);
 
     images.forEach((image) => {
       myForm.append("images", image);
@@ -185,4 +184,4 @@ const NewProduct = ({ history }) => {
   );
 };
 
-export default NewProduct;
+export default SellerNewProduct;

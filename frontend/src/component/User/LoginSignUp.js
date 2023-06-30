@@ -9,6 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 
+import { AiFillShop } from "react-icons/ai";
+import { ImUserTie } from "react-icons/im";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@material-ui/core";
+
 const LoginSignUp = ({ history, location }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -28,9 +38,10 @@ const LoginSignUp = ({ history, location }) => {
     name: "",
     email: "",
     password: "",
+    role:"",
   });
 
-  const { name, email, password } = user;
+  const { name, email, password,role } = user;
 
   const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
@@ -45,10 +56,12 @@ const LoginSignUp = ({ history, location }) => {
 
     const myForm = new FormData();
 
+    // console.log(role);
     myForm.set("name", name);
     myForm.set("email", email);
     myForm.set("password", password);
     myForm.set("avatar", avatar);
+    myForm.set("role", role);
     dispatch(register(myForm));
   };
 
@@ -176,6 +189,32 @@ const LoginSignUp = ({ history, location }) => {
                     value={password}
                     onChange={registerDataChange}
                   />
+                </div>
+                <div className="userRole">
+                  <FormControl>
+                    <FormLabel id="demo-row-radio-buttons-group-label">
+                      User
+                    </FormLabel>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      onChange={(e)=>setUser({ ...user, role: e.target.value })}
+                    >
+                      <FormControlLabel
+                        value="user"
+                        control={<Radio />}
+                        label="Buyer"
+                      />
+                      <ImUserTie />
+                      <FormControlLabel
+                        value="seller"
+                        control={<Radio />}
+                        label="Seller"
+                      />
+                      <AiFillShop />
+                    </RadioGroup>
+                  </FormControl>
                 </div>
 
                 <div id="registerImage">
