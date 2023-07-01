@@ -7,11 +7,13 @@ import { Doughnut, Line } from "react-chartjs-2";
 import { useSelector, useDispatch } from "react-redux";
 import { getSellerProducts } from "../../actions/productAction";
 import MetaData from "../layout/MetaData";
+import { getSellerAllOrders } from "../../actions/orderAction.js";
 
 const SellerDashboard = () => {
   const dispatch = useDispatch();
 
   const { products } = useSelector((state) => state.products);
+  const { orders } = useSelector((state) => state.myOrders);
 
   let outOfStock = 0;
 
@@ -24,9 +26,14 @@ const SellerDashboard = () => {
 
   useEffect(() => {
     dispatch(getSellerProducts());
+    dispatch(getSellerAllOrders());
   }, [dispatch]);
 
   let totalAmount = 0;
+  orders &&
+    orders.forEach((item) => {
+      totalAmount += item.price;
+    });
   
 
   const lineState = {

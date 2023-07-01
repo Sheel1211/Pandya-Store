@@ -18,6 +18,9 @@ import {
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
   CLEAR_ERRORS,
+  SELLER_ORDERS_REQUEST,
+  SELLER_ORDERS_SUCCESS,
+  SELLER_ORDERS_FAIL,
 } from "../constants/orderConstants";
 
 import axios from "axios";
@@ -88,6 +91,29 @@ export const getAllOrders = () => async (dispatch) => {
     });
   }
 };
+
+// Get All Orders (Seller)
+export const getSellerAllOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: SELLER_ORDERS_REQUEST });
+
+    const { data } = await axios.get(
+      "http://localhost:4000/api/v1/seller/orders",
+      { mode: "cors", credentials: "include", withCredentials: true }
+    );
+
+    console.log(data.finalOrders);
+
+    dispatch({ type: SELLER_ORDERS_SUCCESS, payload: data.finalOrders });
+  } catch (error) {
+    dispatch({
+      type: SELLER_ORDERS_FAIL,
+      payload: error.response,
+    });
+  }
+};
+
+
 
 // Update Order
 export const updateOrder = (id, order) => async (dispatch) => {

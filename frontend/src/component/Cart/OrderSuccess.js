@@ -5,6 +5,8 @@ import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 const OrderSuccess = () => {
+  localStorage.setItem("cartItems",[]);
+  
   return (
     <div className="orderSuccess">
       <CheckCircleIcon />

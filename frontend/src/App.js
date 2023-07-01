@@ -47,6 +47,7 @@ import About from "./component/layout/About/About";
 import SellerRoute from "./component/Route/sellerRoute";
 import ProductApproveList from "./component/Admin/productApproval";
 import UpdateSellerProduct from "./component/Seller/UpdateProduct";
+import SellerOrders from "./component/Seller/SellerOrders";
 // import NotFound from "./component/layout/Not Found/NotFound";
 
 function App() {
@@ -98,6 +99,7 @@ function App() {
       )}
 
       <Switch>
+
         <Route exact path="/" component={Home} />
         <Route exact path="/product/:id" component={ProductDetails} />
         <Route exact path="/products" component={Products} />
@@ -233,6 +235,15 @@ function App() {
           isSeller={true}
           component={UpdateSellerProduct}
         />
+        <SellerRoute
+          exact
+          path="/seller/orders"
+          isAdmin={true}
+          isSeller={true}
+          component={SellerOrders}
+        />
+
+        
 
         {/* <Route
           component={

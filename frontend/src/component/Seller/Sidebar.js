@@ -8,7 +8,7 @@ import PostAddIcon from "@material-ui/icons/PostAdd";
 import AddIcon from "@material-ui/icons/Add";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-
+import {TbShoppingCartDiscount} from "react-icons/tb"
 
 const SellerSidebar = () => {
   return (
@@ -37,7 +37,11 @@ const SellerSidebar = () => {
           </TreeItem>
         </TreeView>
       </span>
-      
+      <Link to="/seller/orders">
+        <p>
+          <TbShoppingCartDiscount /> Products Ordered
+        </p>
+      </Link>
     </div>
   );
 };

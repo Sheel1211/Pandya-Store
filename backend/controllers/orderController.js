@@ -2,6 +2,7 @@ const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const sendEmail = require("../utils/sendEmail");
 
 // Create new Order
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
@@ -25,6 +26,28 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     totalPrice,
     paidAt: Date.now(),
     user: req.user._id,
+  });
+
+  console.log("Hello");
+
+  await sendEmail({
+    email: req.user.email,
+    subject: "Thank you for your order! -- Pandya Store",
+    message: `Thank you for choosing our company for your recent purchase. We are delighted to inform you that your order has been successfully placed and is being processed. Here are the details of your order:
+
+    Order Number: ${order._id}
+    Product: ${order.orderItems}
+    
+    Total Amount: ₹ ${order.totalPrice}
+    
+    We are working diligently to ensure that your order is processed and shipped as soon as possible. You can expect to receive a shipping confirmation email with tracking details once your order has been dispatched.
+    
+    If you have any questions or require further assistance, please don't hesitate to reach out to our customer support team at sheelpandya417@gmail.com. We're here to help!
+    
+    Once again, thank you for choosing our company. We greatly appreciate your business and look forward to serving you again in the future.
+    
+    Best regards,
+    Pandya Store`,
   });
 
   res.status(201).json({
@@ -95,6 +118,26 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     });
   }
   order.orderStatus = req.body.status;
+  
+  await sendEmail({
+    email: req.user.email,
+    subject: `Your Order ${order.orderStatus} today! -- Pandya Store`,
+    message:`Thank you for choosing our company for your recent purchase. We are delighted to inform you that your order has been successfully placed and is being processed. Here are the details of your order:
+
+    Order Number: ${order._id}
+    Product: ${order.orderItems}
+    
+    Total Amount: ₹ ${order.totalPrice}
+    
+    We are working diligently to ensure that your order is processed and shipped as soon as possible. You can expect to receive a shipping confirmation email with tracking details once your order has been dispatched.
+    
+    If you have any questions or require further assistance, please don't hesitate to reach out to our customer support team at sheelpandya417@gmail.com. We're here to help!
+    
+    Once again, thank you for choosing our company. We greatly appreciate your business and look forward to serving you again in the future.
+    
+    Best regards,
+    Pandya Store`
+  });
 
   if (req.body.status === "Delivered") {
     order.deliveredAt = Date.now();
@@ -144,8 +187,14 @@ exports.getSellerOrder = catchAsyncErrors(async (req, res, next) => {
             sellerProducts[i]._id.toString() ===
             o.orderItems[j].product.toString()
           ) {
-            o.orderItems[j].buyer = o.user;
-            finalOrders.push(o.orderItems[j]);
+            const items = JSON.stringify(o.orderItems[j]);
+
+            const status = { status: o.orderStatus };
+            const s =
+              items.substring(0, items.length - 1) +
+              "," +
+              JSON.stringify(status).substring(1);
+            finalOrders.push(JSON.parse(s));
           }
         }
       }
