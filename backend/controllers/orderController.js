@@ -28,7 +28,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     user: req.user._id,
   });
 
-  console.log("Hello");
+  // console.log("Hello");
 
   await sendEmail({
     email: req.user.email,
@@ -118,12 +118,13 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     });
   }
   order.orderStatus = req.body.status;
-  
-  await sendEmail({
-    email: req.user.email,
-    subject: `Your Order ${order.orderStatus} today! -- Pandya Store`,
-    message:`Thank you for choosing our company for your recent purchase. We are delighted to inform you that your order has been successfully placed and is being processed. Here are the details of your order:
 
+  if (order.orderStatus === "Processing") {
+    await sendEmail({
+      email: req.user.email,
+      subject: `Your Order ${order.orderStatus} today! -- Pandya Store`,
+      message: `Thank you for choosing our company for your recent purchase. We are delighted to inform you that your order has been successfully placed and is being processed. Here are the details of your order:
+      
     Order Number: ${order._id}
     Product: ${order.orderItems}
     
@@ -136,8 +137,27 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     Once again, thank you for choosing our company. We greatly appreciate your business and look forward to serving you again in the future.
     
     Best regards,
-    Pandya Store`
-  });
+    Pandya Store`,
+    });
+  } else {
+    await sendEmail({
+      email: req.user.email,
+      subject: `Your Order ${order.orderStatus} today! -- Pandya Store`,
+      message: `Thank you for choosing our company for your recent purchase. We are delighted to inform you that your order has been successfully placed and is being processed. Here are the details of your order:
+    
+  Order Number: ${order._id}
+  Product: ${order.orderItems}
+  
+  Total Amount: ₹ ${order.totalPrice}
+  
+  If you have any questions or require further assistance, please don't hesitate to reach out to our customer support team at sheelpandya417@gmail.com. We're here to help!
+  
+  Once again, thank you for choosing our company. We greatly appreciate your business and look forward to serving you again in the future.
+  
+  Best regards,
+  Pandya Store`,
+    });
+  }
 
   if (req.body.status === "Delivered") {
     order.deliveredAt = Date.now();
@@ -147,7 +167,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
   });
-});
+}); 
 
 async function updateStock(id, quantity) {
   const product = await Product.findById(id);
