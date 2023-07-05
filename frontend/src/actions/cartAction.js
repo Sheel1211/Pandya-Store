@@ -7,7 +7,7 @@ import axios from "axios";
 
 // Add to Cart
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
-  const { data } = await axios.get(`http://localhost:4000/api/v1/product/${id}`,{mode:'cors',
+  const { data } = await axios.get(`https://pandya-store.onrender.com/api/v1/product/${id}`,{mode:'cors',
   credentials:'include',
   withCredentials:true});
 

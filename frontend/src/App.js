@@ -57,7 +57,7 @@ function App() {
 
   async function getStripeApiKey() {
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/stripeapikey",
+      "https://pandya-store.onrender.com/api/v1/stripeapikey",
       {
         headers: {
           Accept: "application/json",

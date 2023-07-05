@@ -53,10 +53,10 @@ export const getProduct =
     try {
       dispatch({ type: ALL_PRODUCT_REQUEST });
 
-      let link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+      let link = `https://pandya-store.onrender.com/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
 
       if (category) {
-        link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
+        link = `https://pandya-store.onrender.com/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
       }
 
       const { data } = await axios.get(link,{mode:'cors',
@@ -80,7 +80,7 @@ export const getAdminProduct = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/admin/products",{mode:'cors',
+    const { data } = await axios.get("https://pandya-store.onrender.com/api/v1/admin/products",{mode:'cors',
     credentials:'include',
     withCredentials:true});
 
@@ -101,7 +101,7 @@ export const getSellerProducts = ()=>async(dispatch)=>{
   try {
     dispatch({ type: SELLER_PRODUCT_REQUEST });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/seller/products",{mode:'cors',
+    const { data } = await axios.get("https://pandya-store.onrender.com/api/v1/seller/products",{mode:'cors',
     credentials:'include',
     withCredentials:true});
 
@@ -122,7 +122,7 @@ export const getUnapprovedProduct = () => async (dispatch) => {
   try {
     dispatch({ type: UNAPPROVED_PRODUCT_REQUEST });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/admin/getUnapprovedProducts",{mode:'cors',
+    const { data } = await axios.get("https://pandya-store.onrender.com/api/v1/admin/getUnapprovedProducts",{mode:'cors',
     credentials:'include',
     withCredentials:true});
 
@@ -152,7 +152,7 @@ export const createProduct = (productData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `http://localhost:4000/api/v1/admin/product/new`,
+      `https://pandya-store.onrender.com/api/v1/admin/product/new`,
       productData,
       config
     );
@@ -182,7 +182,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:4000/api/v1/admin/product/${id}`,
+      `https://pandya-store.onrender.com/api/v1/admin/product/${id}`,
       productData,
       config
     );
@@ -204,7 +204,7 @@ export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
 
-    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/product/${id}`,{mode:'cors',
+    const { data } = await axios.delete(`https://pandya-store.onrender.com/api/v1/admin/product/${id}`,{mode:'cors',
     credentials:'include',
     withCredentials:true});
 
@@ -225,7 +225,7 @@ export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`http://localhost:4000/api/v1/product/${id}`,{mode:'cors',
+    const { data } = await axios.get(`https://pandya-store.onrender.com/api/v1/product/${id}`,{mode:'cors',
     credentials:'include',
     withCredentials:true});
 
@@ -253,7 +253,7 @@ export const newReview = (reviewData) => async (dispatch) => {
       withCredentials:true
     };
 
-    const { data } = await axios.put(`http://localhost:4000/api/v1/review`, reviewData, config);
+    const { data } = await axios.put(`https://pandya-store.onrender.com/api/v1/review`, reviewData, config);
 
     dispatch({
       type: NEW_REVIEW_SUCCESS,
@@ -272,7 +272,7 @@ export const getAllReviews = (id) => async (dispatch) => {
   try {
     dispatch({ type: ALL_REVIEW_REQUEST });
 
-    const { data } = await axios.get(`http://localhost:4000/api/v1/reviews?id=${id}`,{mode:'cors',
+    const { data } = await axios.get(`https://pandya-store.onrender.com/api/v1/reviews?id=${id}`,{mode:'cors',
     credentials:'include',
     withCredentials:true});
 
@@ -294,7 +294,7 @@ export const deleteReviews = (reviewId, productId) => async (dispatch) => {
     dispatch({ type: DELETE_REVIEW_REQUEST });
 
     const { data } = await axios.delete(
-      `http://localhost:4000/api/v1/reviews?id=${reviewId}&productId=${productId}`,{mode:'cors',
+      `https://pandya-store.onrender.com/api/v1/reviews?id=${reviewId}&productId=${productId}`,{mode:'cors',
       credentials:'include',
       withCredentials:true}
     );
@@ -321,7 +321,7 @@ export const approveProduct=(id)=>async(dispatch)=>{
     dispatch({ type: APPROVE_PRODUCT_REQUEST });
 
     const { data } = await axios.get(
-      `http://localhost:4000/api/v1/admin/approve/product/${id}`,{mode:'cors',
+      `https://pandya-store.onrender.com/api/v1/admin/approve/product/${id}`,{mode:'cors',
       credentials:'include',
       withCredentials:true}
     );
@@ -342,7 +342,7 @@ export const deleteSellerProduct = (id)=>async(dispatch)=>{
   try{
     dispatch({type:DELETE_SELLER_PRODUCT_REQUEST});
 
-    const {data}=await axios.delete(`http://localhost:4000/api/v1/seller/product/${id}`,{mode:'cors',
+    const {data}=await axios.delete(`https://pandya-store.onrender.com/api/v1/seller/product/${id}`,{mode:'cors',
     credentials:'include',
     withCredentials:true});
 
@@ -371,7 +371,7 @@ export const updateSellerProduct = (id, productData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:4000/api/v1/seller/product/${id}`,
+      `https://pandya-store.onrender.com/api/v1/seller/product/${id}`,
       productData,
       config
     );

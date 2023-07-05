@@ -39,7 +39,7 @@ export const createOrder = (order) => async (dispatch) => {
       withCredentials: true,
     };
     const { data } = await axios.post(
-      "http://localhost:4000/api/v1/order/new",
+      "https://pandya-store.onrender.com/api/v1/order/new",
       order,
       config
     );
@@ -58,7 +58,7 @@ export const myOrders = () => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDERS_REQUEST });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/orders/me", {
+    const { data } = await axios.get("https://pandya-store.onrender.com/api/v1/orders/me", {
       mode: "cors",
       credentials: "include",
       withCredentials: true,
@@ -79,7 +79,7 @@ export const getAllOrders = () => async (dispatch) => {
     dispatch({ type: ALL_ORDERS_REQUEST });
 
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/admin/orders",
+      "https://pandya-store.onrender.com/api/v1/admin/orders",
       { mode: "cors", credentials: "include", withCredentials: true }
     );
 
@@ -98,7 +98,7 @@ export const getSellerAllOrders = () => async (dispatch) => {
     dispatch({ type: SELLER_ORDERS_REQUEST });
 
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/seller/orders",
+      "https://pandya-store.onrender.com/api/v1/seller/orders",
       { mode: "cors", credentials: "include", withCredentials: true }
     );
 
@@ -129,7 +129,7 @@ export const updateOrder = (id, order) => async (dispatch) => {
       withCredentials: true,
     };
     const { data } = await axios.put(
-      `http://localhost:4000/api/v1/admin/order/${id}`,
+      `https://pandya-store.onrender.com/api/v1/admin/order/${id}`,
       order,
       config
     );
@@ -149,7 +149,7 @@ export const deleteOrder = (id) => async (dispatch) => {
     dispatch({ type: DELETE_ORDER_REQUEST });
 
     const { data } = await axios.delete(
-      `http://localhost:4000/api/v1/admin/order/${id}`,
+      `https://pandya-store.onrender.com/api/v1/admin/order/${id}`,
       { mode: "cors", credentials: "include", withCredentials: true }
     );
 
@@ -168,7 +168,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
     dispatch({ type: ORDER_DETAILS_REQUEST });
 
     const { data } = await axios.get(
-      `http://localhost:4000/api/v1/order/${id}`,
+      `https://pandya-store.onrender.com/api/v1/order/${id}`,
       { mode: "cors", credentials: "include", withCredentials: true }
     );
 
