@@ -1,4 +1,4 @@
-const ErrorHandler = require("../utils/ErrorHandler.js");
+const ErrorHandler = require("./ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
