@@ -14,7 +14,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 }
 
 const corsOptions = {
-  origin: ['http://localhost:3000'],
+  origin: ['http://localhost:3000','https://pandya-store.onrender.com/','http://localhost:4000'],
   credentials: true
 }
 

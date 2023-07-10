@@ -485,6 +485,7 @@ const ReactNavbar = ({
 
 
 const options = {
+  burgerColor:"#daf0fe",
   burgerColorHover: "#daf0fe",
   logo,
   logoWidth: "20vmax",
